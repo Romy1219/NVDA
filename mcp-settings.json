@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "_comment": "GPU Ecosystem Portfolio — MCP Server Configuration Template",
+  "_version": "1.0.0",
+  "_last_updated": "2026-03-13",
+  "mcpServers": {
+
+    "sec-edgar": {
+      "_purpose": "Official SEC EDGAR XBRL/filing access for 10-K, 10-Q, 8-K, DEF 14A",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sec-edgar"],
+      "env": {
+        "SEC_EDGAR_USER_AGENT": "YourName your@email.com",
+        "SEC_EDGAR_API_BASE": "https://data.sec.gov",
+        "SEC_RATE_LIMIT_RPS": "10",
+        "SEC_DEFAULT_FORM_TYPES": "10-K,10-Q,8-K",
+        "SEC_CACHE_TTL_SECONDS": "3600"
+      },
+      "capabilities": [
+        "get_company_info",
+        "get_financials",
+        "get_filing_content",
+        "get_filing_sections",
+        "get_key_metrics",
+        "search_companies",
+        "get_recent_filings",
+        "get_xbrl_concepts",
+        "get_segment_data",
+        "compare_periods"
+      ]
+    },
+
+    "calculator": {
+      "_purpose": "Financial ratio automation — CAGR, DCF, D/E ratio, margin calculations",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-calculator"],
+      "env": {
+        "CALC_PRECISION": "4",
+        "CALC_CURRENCY_DEFAULT": "USD",
+        "CALC_ENABLE_ADVANCED": "true"
+      },
+      "capabilities": [
+        "evaluate_expression",
+        "calculate_cagr",
+        "calculate_dcf",
+        "calculate_ratios",
+        "run_scenario_analysis"
+      ]
+    },
+
+    "web-search": {
+      "_purpose": "Real-time market news, analyst coverage, earnings transcripts",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "<YOUR_BRAVE_API_KEY>",
+        "SEARCH_RESULT_COUNT": "10",
+        "SEARCH_FRESHNESS": "pd",
+        "SEARCH_MARKET_FOCUS": "finance,technology"
+      },
+      "capabilities": [
+        "web_search",
+        "news_search",
+        "fetch_webpage"
+      ]
+    },
+
+    "time-series": {
+      "_purpose": "Historical OHLCV stock prices, volatility, moving averages, beta",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-timeseries"],
+      "env": {
+        "TS_DATA_PROVIDER": "polygon",
+        "POLYGON_API_KEY": "<YOUR_POLYGON_API_KEY>",
+        "TS_DEFAULT_INTERVAL": "1d",
+        "TS_LOOKBACK_YEARS": "5",
+        "TS_ADJUSTED": "true",
+        "TS_TICKERS_DEFAULT": "NVDA,AMD,INTC,TSM,MU,AVGO,MRVL,ANET"
+      },
+      "capabilities": [
+        "get_historical_prices",
+        "calculate_returns",
+        "calculate_volatility",
+        "get_correlation_matrix",
+        "run_technical_indicators"
+      ]
+    }
+  },
+
+  "globalSettings": {
+    "timeout_ms": 30000,
+    "retry_attempts": 3,
+    "retry_backoff_ms": 1000,
+    "log_level": "info",
+    "cache_enabled": true,
+    "cache_dir": ".mcp_cache"
+  }
+}
